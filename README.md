@@ -134,15 +134,6 @@ A separate design document explains the internal working of:
 
 <hr>
 
-<h2>Limitations</h2>
-<ul>
-    <li>Virtual memory is described conceptually but not fully simulated</li>
-    <li>Cache is direct-mapped only</li>
-    <li>FIFO replacement policy is implemented</li>
-</ul>
-
-<hr>
-
 <h2>Author</h2>
 <p>
 <strong>Arpita Jain</strong><br>
