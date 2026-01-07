@@ -1,32 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Design Document – OS Memory and Cache Simulator</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
-            line-height: 1.7;
-        }
-        h1, h2, h3 {
-            color: #2c3e50;
-        }
-        pre {
-            background-color: #f4f4f4;
-            padding: 12px;
-            border-radius: 6px;
-            overflow-x: auto;
-        }
-        ul {
-            margin-left: 25px;
-        }
-        hr {
-            margin: 40px 0;
-        }
-    </style>
-</head>
-
 <body>
 
 <h1>Design Document</h1>
