@@ -1,9 +1,27 @@
 OS MEMORY AND CACHE SIMULATOR
-Sample Input Workloads and Expected Outputs
-===========================================
+Sample Input Workloads and Expected Behavior
+============================================
+
+NOTE:
+Each workload is an independent test case.
+Commands are entered via the CLI exactly as shown.
+
 
 --------------------------------------------------
-WORKLOAD 1: Basic Memory Allocation (First Fit)
+WORKLOAD 1: Physical Memory Initialization
+--------------------------------------------------
+
+Commands:
+init memory 1024
+
+Expected Behavior:
+- A contiguous block of physical memory of size 1024 bytes is created
+- All memory is initially free
+- Allocation counters are reset
+
+
+--------------------------------------------------
+WORKLOAD 2: First Fit Allocation
 --------------------------------------------------
 
 Commands:
@@ -15,56 +33,45 @@ dump
 stats
 
 Expected Behavior:
-- Physical memory initialized with size 1024
-- Two blocks allocated using First Fit strategy
-- Memory blocks split correctly
-- No fragmentation initially
+- First Fit strategy is used
+- Blocks are allocated sequentially from the beginning
+- Memory blocks are split correctly
+- No internal or external fragmentation initially
 
-Expected Output (approximate):
-[0 - 99] USED (id=1)
+Expected Memory Layout (approximate):
+[0 - 99]    USED (id=1)
 [100 - 299] USED (id=2)
 [300 - 1023] FREE
 
-Metrics:
-Used Memory: 300
-Free Memory: 724
-Internal Fragmentation: 0
-External Fragmentation: 0
-Memory Utilization: ~29%
+Expected Metrics:
+Used Memory = 300
+Free Memory = 724
+Internal Fragmentation = 0
+External Fragmentation = 0
 
 
 --------------------------------------------------
-WORKLOAD 2: Deallocation and Coalescing
+WORKLOAD 3: Deallocation and Coalescing
 --------------------------------------------------
 
 Commands:
-init memory 1024
-set allocator first_fit
-malloc 100
-malloc 300
-malloc 200
-free 2
+free 1
 dump
 stats
 
 Expected Behavior:
-- Block with id=2 is freed
-- Adjacent free blocks are coalesced
-- External fragmentation appears
+- Block with id=1 is freed
+- Adjacent free blocks are merged (coalescing)
+- External fragmentation may change
 
-Expected Output (approximate):
-[0 - 99] USED (id=1)
-[100 - 399] FREE
-[400 - 599] USED (id=3)
-[600 - 1023] FREE
-
-Metrics:
-External Fragmentation > 0
-Successful deallocation and merging observed
+Expected Memory Layout (approximate):
+[0 - 99]    FREE
+[100 - 299] USED (id=2)
+[300 - 1023] FREE
 
 
 --------------------------------------------------
-WORKLOAD 3: Best Fit Allocation
+WORKLOAD 4: Best Fit Allocation Strategy
 --------------------------------------------------
 
 Commands:
@@ -79,12 +86,13 @@ dump
 stats
 
 Expected Behavior:
-- Best Fit allocator selects smallest suitable free block
+- Best Fit selects the smallest suitable free block
 - Allocation occurs inside the 300-byte hole
-- Block splitting performed correctly
+- Block splitting is performed
+- Fragmentation behavior differs from First Fit
 
-Expected Output (approximate):
-[0 - 99] USED
+Expected Memory Layout (approximate):
+[0 - 99]    USED
 [100 - 279] USED
 [280 - 399] FREE
 [400 - 599] USED
@@ -92,7 +100,7 @@ Expected Output (approximate):
 
 
 --------------------------------------------------
-WORKLOAD 4: Worst Fit Allocation
+WORKLOAD 5: Worst Fit Allocation Strategy
 --------------------------------------------------
 
 Commands:
@@ -107,13 +115,30 @@ dump
 stats
 
 Expected Behavior:
-- Worst Fit allocator selects the largest available free block
+- Worst Fit selects the largest available free block
+- Allocation is made from the largest hole
 - Fragmentation pattern differs from Best Fit
-- Allocation performed from largest hole
 
 
 --------------------------------------------------
-WORKLOAD 5: Error Handling
+WORKLOAD 6: Allocation Failure Handling
+--------------------------------------------------
+
+Commands:
+init memory 256
+set allocator first_fit
+malloc 200
+malloc 100
+
+Expected Behavior:
+- First allocation succeeds
+- Second allocation fails due to insufficient memory
+- Failed allocation counter increases
+- Simulator continues running safely
+
+
+--------------------------------------------------
+WORKLOAD 7: Invalid Deallocation (Error Handling)
 --------------------------------------------------
 
 Commands:
@@ -121,24 +146,41 @@ free 99
 
 Expected Behavior:
 - Block id does not exist
-- Simulator prints an error message
-- Program continues running safely
-
-Expected Output:
-Invalid block id
+- Simulator prints "Invalid block id"
+- Program does not crash
 
 
 --------------------------------------------------
-WORKLOAD 6: Cache Simulation (Automatic)
+WORKLOAD 8: Metrics and Statistics Reporting
+--------------------------------------------------
+
+Commands:
+stats
+
+Expected Behavior:
+- Simulator reports:
+  - Total memory
+  - Used memory
+  - Free memory
+  - Internal fragmentation
+  - External fragmentation
+  - Memory utilization
+  - Allocation success/failure counts
+
+
+--------------------------------------------------
+WORKLOAD 9: Cache Simulation (Multilevel Cache)
 --------------------------------------------------
 
 Commands:
 exit
 
 Expected Behavior:
-- CLI terminates
+- CLI exits
 - Cache simulation starts automatically
-- Multilevel cache behavior is displayed
+- L1 cache is accessed first
+- On L1 miss, access propagates to L2
+- Cache hit and miss counts are displayed
 
 Expected Output (approximate):
 
@@ -153,11 +195,6 @@ Hit Ratio: <percentage>
 Hits: <value>
 Misses: <value>
 Hit Ratio: <percentage>
-
-Notes:
-- L1 cache accessed first
-- L2 cache accessed on L1 miss
-- FIFO replacement policy implicitly applied
 
 
 --------------------------------------------------
