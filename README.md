@@ -1,5 +1,9 @@
 
 
+
+https://github.com/user-attachments/assets/d47780fa-b98d-4903-8103-07ecac18dac0
+
+
 <body>
 
 <h1>OS Memory & Cache Simulator</h1>
