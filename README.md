@@ -86,8 +86,9 @@ os-memory-cache-simulator/
 │   │   └── cache.cpp
 │   └── main.cpp
 │
+├── test_workloads.txt
 ├── design.md
-├── Video
+├── demo video
 ├── README.html
 └── .gitignore
 </pre>
