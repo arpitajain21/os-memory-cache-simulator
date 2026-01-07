@@ -86,9 +86,8 @@ os-memory-cache-simulator/
 │   │   └── cache.cpp
 │   └── main.cpp
 │
-├── docs/
-│   └── screenshots/
-│
+├── design.md
+├── Video
 ├── README.html
 └── .gitignore
 </pre>
@@ -112,18 +111,6 @@ g++ -std=c++17 src/memory/memory_manager.cpp src/memory/cache.cpp src/main.cpp -
 <pre>
 ./memsim        (Linux / macOS)
 .\memsim        (Windows)
-</pre>
-
-<hr>
-
-<h2>Demonstration & Test Artifacts</h2>
-<p>
-Screenshots demonstrating allocation behavior, cache hits/misses,
-and error handling are stored in:
-</p>
-
-<pre>
-docs/screenshots/
 </pre>
 
 <hr>
