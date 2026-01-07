@@ -1,27 +1,4 @@
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>OS Memory & Cache Simulator</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
-            line-height: 1.6;
-        }
-        h1, h2, h3 {
-            color: #2c3e50;
-        }
-        code, pre {
-            background-color: #f4f4f4;
-            padding: 6px;
-            display: block;
-            border-radius: 4px;
-        }
-        ul {
-            margin-left: 20px;
-        }
-    </style>
-</head>
+
 
 <body>
 
