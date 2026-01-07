@@ -39,3 +39,25 @@
 
 # debug information files
 *.dwo
+
+# -------------------------
+# Project-specific binaries
+# -------------------------
+memsim
+memory
+
+# -------------------------
+# Editor / OS junk
+# -------------------------
+.DS_Store
+Thumbs.db
+
+# -------------------------
+# VS Code (optional)
+# -------------------------
+.vscode/
+
+# -------------------------
+# Logs (if generated)
+# -------------------------
+*.log
